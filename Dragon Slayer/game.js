@@ -2,6 +2,12 @@
 
 let gameScene = new Phaser.Scene('Game');
 
+// initiate scene parameters
+gameScene.init = function() {
+  // player speed  
+    this.playerSpeed = 3;
+};
+
 // load assets
 gameScene.preload = function(){
     this.load.image('background', 'assets/background.png')
@@ -12,27 +18,37 @@ gameScene.preload = function(){
 // called once after the preload ends
 gameScene.create = function() {
     // create bg sprite
-    let bg = this.add.sprite(0, 0, 'background');
+    this.bg = this.add.sprite(0, 0, 'background');
     
     // change the origin to the top-left corner
-    bg.setOrigin(0,0);
+    this.bg.setOrigin(0,0);
     
     // create the player
-    let player = this.add.sprite(50, 180, 'player');
+    this.player = this.add.sprite(40, 180, 'player');
     
     // with setScale you can change the scale of an image
-    player.setScale(0.5);
+    this.player.setScale(0.5);
     
-    // create an enemy1
-    let enemy1 = this.add.sprite(250, 180, 'enemy');
-    enemy1.setScale(0.75);
-    // flip
-    enemy1.flipX = true;
-    
-    // create an enemy2
-    let enemy2 = this.add.sprite(350, 180, 'enemy');
-    enemy2.setScale(0.75);
-    enemy2.flipX = true;
+//    // create an enemy1
+//    this.enemy1 = this.add.sprite(250, 180, 'enemy');
+//    this.enemy1.setScale(0.75);
+//    // flip
+//    this.enemy1.flipX = true;
+//    
+//    // create an enemy2
+//    this.enemy2 = this.add.sprite(350, 180, 'enemy');
+//    this.enemy2.setScale(0.75);
+//    // flip
+//    this.enemy2.flipX = true;
+//    
+};
+
+// this is called up to 60 times per second
+gameScene.update = function(){
+    if(this.input.activePointer.isDown){
+        // player walks
+        this.player.x += this.playerSpeed;
+    };
     
 };
 
