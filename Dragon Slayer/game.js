@@ -7,7 +7,8 @@ gameScene.init = function() {
     this.playerSpeed = 3;
     
     // enemy speed
-    this.enemySpeed = 3;
+    this.enemyMinSpeed = 2;
+    this.enemyMaxSpeed = 4.5;
     
     // screen limits
     this.enemyMinY = 80;
@@ -45,6 +46,12 @@ gameScene.create = function() {
     this.enemy.setScale(0.6);
     // flip
     this.enemy.flipX = true;
+    
+    // set enemy speed randomly 
+    let dir = Math.random() < 0.5 ? 1 : -1;
+    let speed = this.enemyMinSpeed + Math.random() * (this.enemyMaxSpeed - this.enemyMinSpeed);
+    this.enemy.speed = dir * speed;
+    
 //    
 //    // create an enemy2
 //    this.enemy2 = this.add.sprite(350, 180, 'enemy');
@@ -77,15 +84,15 @@ gameScene.update = function(){
     };
     
     // enemy movement
-    this.enemy.y += this.enemySpeed;
+    this.enemy.y += this.enemy.speed;
     
-    // check we haven't passed min Y
+    // check we haven't passed min or max Y
     let topReached = this.enemy.y <= this.enemyMinY;
     let botReached = this.enemy.y >= this.enemyMaxY;
     
     if(topReached || botReached) {
         // reverse speed
-        this.enemySpeed *= -1;  
+        this.enemy.speed *= -1;  
     };
     
 };
